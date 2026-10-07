@@ -184,32 +184,30 @@ function money(n){return Number(n).toLocaleString('en-CA',{style:'currency',curr
 function updateGreeting(){
   const hour=new Date().getHours();
   const time=hour<12?'Good morning,':hour<18?'Good afternoon,':'Good evening,';
-  const income=Number(document.getElementById('inAmount')?.value)||2920;
-  const out=Number(document.getElementById('outAmount')?.value)||1835;
-  const balance=Number(document.getElementById('balanceAmount')?.value)||2847.21;
-  const debt=Number(document.getElementById('debtAmount')?.value)||18620;
-  const apr=Number(document.getElementById('aprAmount')?.value)||22.99;
-  const saved=JSON.parse(localStorage.getItem('oofDemoNumbers')||'null');
-  const messages=[];
-  if(saved){
-    if(out>income){messages.push('Okay, we have officially spent more than came in. That is... impressive. Let’s fix that.');}
-    else if(balance<500){messages.push('You’re getting a little too close to the edge. Nothing is ruined. Maybe let’s stop spending for a minute.');}
-    else if(debt>15000 && apr>=20){messages.push('Your money is doing okay. That high-interest debt, however, is still sitting there being expensive. Rude.');}
-    else if(out>income*.7){messages.push('You’re doing alright, but spending is getting a little enthusiastic. I’m just saying.');}
-    else if(income-out>=500){messages.push('Look at you. Bills covered, money left over, and no financial nonsense detected. Keep it up.');}
-    else {messages.push('You’re on track. Nothing is currently on fire. Let’s keep it that way.');}
-  } else {
-    messages.push('Bills are covered and your plan is on track. Look at you.'); 
-  }
-  const variations=[
-    'You’re doing pretty well. Try not to make me compliment you twice.',
-    'Things are looking solid. Please don’t take that as a challenge.',
-    'You’re on track. I have nothing sarcastic to report. For once.',
-    'Money is behaving itself today. Let’s not ruin it.',
-    'Not bad. Actually, pretty good. I hate to admit it.',
-    'You’re covered and moving in the right direction. Carry on.'
-  ];
-  const msg=messages[0] || variations[Math.floor(Math.random()*variations.length)];
+  const saved=JSON.parse(localStorage.getItem('oofDemoNumbers')||'null')||{};
+  const income=Number(saved.in)||2920, out=Number(saved.out)||1835, balance=Number(saved.balance)||2847.21;
+  const debt=Number(saved.debt)||18620, apr=Number(saved.apr)||22.99, score=Number(saved.score)||742;
+  const goal=saved.goal||'your goals';
+  const tone=saved.tone||'Razz me';
+  let situation='steady';
+  if(out>income) situation='overspent';
+  else if(balance<500) situation='low';
+  else if(debt>15000&&apr>=20) situation='debt';
+  else if(out>income*.7) situation='spending';
+  else if(income-out>=500) situation='good';
+  const lines={
+    good:['Bills are covered, you’ve got money left, and you’re moving toward '+goal+'. Look at you.','Okay, look at you. The money is behaving and the goal is actually moving. I’m impressed.'],
+    spending:['You’re doing okay, but spending is getting a little enthusiastic. '+goal+' would like a word.','You’re still on track, but the spending is getting bold. Maybe let’s not help it get any bolder.'],
+    debt:['Your day-to-day money looks okay. That '+apr.toFixed(2)+'% debt is still being expensive, though. Rude.','Bills are covered. Now that '+apr.toFixed(2)+'% debt is sitting there charging you money like it owns the place. Let’s deal with it.'],
+    low:['You’re getting a little close to the edge. Nothing is ruined, but I’d keep spending tight until more money comes in.','You’ve got less room than usual right now. Maybe don’t develop an expensive new hobby this week.'],
+    overspent:['Okay. We spent more than came in. That is technically a strategy. Not one I recommend.','Lindsay. We have officially spent more than came in. I have questions.'],
+    steady:['You’re on track. Nothing is currently on fire. Let’s keep it that way.','Nothing weird is happening with your money today. Honestly? I’ll take it.']
+  };
+  let msg=lines[situation][Math.floor(Math.random()*lines[situation].length)];
+  if(tone==='Gentle') msg=msg.replace(/Rude\.|I have questions\.|Maybe don’t develop an expensive new hobby this week\./g,'Let’s keep things comfortable.').replace(/bold/g,'a little higher than usual');
+  if(tone==='Sarcastic') msg=msg.replace('Look at you.','Oh, look at you.').replace('Honestly? I’ll take it.','Well. That’s surprisingly responsible.');
+  if(tone==='Tough love') msg=msg.replace('Maybe let’s not help it get any bolder.','Let’s pull it back.').replace('Let’s keep it that way.','Keep it that way.');
+  if(tone==='No mercy / swear mode') msg=msg.replace('Maybe let’s not help it get any bolder.','Put the card down.').replace('Let’s keep it that way.','Do not screw this up.').replace('Rude.','Because apparently the debt needed more of your money.');
   document.getElementById('greetingTime').textContent=time;
   document.getElementById('userGreetingName').textContent='Lindsay.';
   document.getElementById('greetingMessage').textContent=msg;
