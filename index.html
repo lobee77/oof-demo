@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<title>oof. — Money help, minus the panic.</title>
+<style>
+:root{
+  --bg:#080808; --panel:#111111; --panel2:#151515; --line:#292929;
+  --text:#f6f3f1; --muted:#aaa4a1; --accent:#ff817d; --accent2:#ff9b96;
+  --good:#70e0bd; --danger:#ff817d; --radius:20px;
+}
+*{box-sizing:border-box} body{margin:0;background:#000;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+.app{min-height:100vh;background:var(--bg);max-width:480px;margin:auto;position:relative;padding-bottom:88px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:24px 20px 10px}
+.logo{font-size:30px;font-weight:850;letter-spacing:-2px;color:var(--accent)}
+.weather{font-size:12px;color:var(--muted);text-align:right;line-height:1.35}.weather b{color:#eee;font-size:15px}
+main{padding:10px 18px 20px}.screen{display:none}.screen.active{display:block}
+.greeting{padding:12px 4px 20px}.greeting .hello{font-size:17px;color:#d5d0cd}.greeting h1{font-size:34px;line-height:1.05;margin:3px 0 10px;letter-spacing:-1.2px}.greeting p{font-size:14px;line-height:1.5;color:var(--muted);margin:0;max-width:340px}
+.card{background:linear-gradient(180deg,#141414,#101010);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:12px 0}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.label{font-size:13px;color:var(--muted)}.link{font-size:12px;color:var(--accent);background:none}
+.balance{font-size:36px;letter-spacing:-1.5px;margin:6px 0}.change{font-size:13px;color:var(--good)}
+.monthgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.metric{padding:5px 2px}.metric strong{display:block;font-size:19px}.metric span{font-size:11px;color:var(--muted)}
+.progress{height:7px;background:#292929;border-radius:99px;overflow:hidden;margin:10px 0 15px}.progress i{display:block;height:100%;width:63%;background:var(--accent);border-radius:99px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #252525}.row:last-child{border-bottom:0}.icon{width:38px;height:38px;border-radius:12px;background:#1d1717;display:grid;place-items:center;color:var(--accent);font-size:17px;flex:none}.row-main{flex:1;min-width:0}.row-main b{display:block;font-size:14px;font-weight:600}.row-main span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.amount{font-size:14px;text-align:right}.arrow{color:#777;font-size:18px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);height:76px;background:rgba(10,10,10,.97);border-top:1px solid #252525;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px env(safe-area-inset-bottom)}
+.nav button{background:none;color:#777;font-size:10px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}.nav button span{font-size:20px;line-height:1}.nav button.active{color:var(--accent)}
+.title{font-size:27px;letter-spacing:-.7px;margin:12px 2px 4px}.subtitle{color:var(--muted);font-size:13px;margin:0 2px 18px}
+.segment{display:grid;grid-template-columns:repeat(3,1fr);background:#151515;border-radius:12px;padding:3px;margin-bottom:14px}.segment button{background:none;padding:9px 4px;border-radius:9px;color:#aaa;font-size:11px}.segment button.active{background:var(--accent);color:#17100f}
+.bigrow{display:flex;justify-content:space-between;align-items:end}.big{font-size:32px;letter-spacing:-1px}.small{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;border:1px solid #40302f;color:var(--accent);border-radius:99px;padding:5px 9px;font-size:11px}
+.primary{width:100%;padding:14px;border-radius:15px;background:var(--accent);color:#1a0e0d;font-weight:750;margin-top:12px}
+.secondary{width:100%;padding:13px;border-radius:15px;background:#191919;border:1px solid #383838;color:#eee;font-weight:650;margin-top:10px}
+.score{display:flex;align-items:center;justify-content:space-between;gap:15px}.score-num{font-size:50px;font-weight:750;letter-spacing:-2px}.score-ring{width:122px;height:62px;border:9px solid #333;border-bottom:0;border-radius:100px 100px 0 0;position:relative}.score-ring:after{content:"";position:absolute;left:-9px;top:-9px;width:76px;height:62px;border:9px solid var(--accent);border-bottom:0;border-right-color:transparent;border-radius:100px 100px 0 0}
+.debt-total{font-size:34px;color:var(--accent);margin:4px 0}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.listcard{padding:0 16px}.listcard .row{padding:15px 0}
+.option{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #252525}.option:last-child{border:0}.option .icon{background:#191414}.option b{font-size:14px}.option p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.35}
+.hidden{display:none!important}
+@media(min-width:700px){body{padding:25px 0}.app{border:1px solid #222;border-radius:30px;overflow:hidden;box-shadow:0 20px 70px #000}}
+</style>
+
+<style>
+.tagline,.site-tagline{color:#fff;font-size:12px;font-weight:600;letter-spacing:.02em;margin-top:4px;line-height:1.5}.site-tagline{padding:18px 20px 0}.site-tagline span{color:#fff;opacity:.95}.brand{position:relative;z-index:2}</style>
+</head>
+<body><div class="site-tagline">oof.<br><span>See it. Sort it. Pay it down. Save. Chill out.</span></div>
+<div class="app">
+<header class="top"><div class="logo">oof.</div><div class="weather">☼ <b>14°</b><br>Mostly sunny</div></header>
+
+<main>
+<section id="home" class="screen active">
+  <div class="greeting"><div class="hello">Good morning,</div><h1>Lindsay.</h1><p>Bills are covered, spending is on track, and you've got $420 left this month. You're doing great.</p></div>
+  <div class="card"><div class="label">Account balance</div><div class="balance">$2,847.21</div><div class="change">↑ $350 from last week</div></div>
+  <div class="card"><div class="card-head"><b>This month</b><button class="link" onclick="show('budget')">See details →</button></div><div class="progress"><i></i></div><div class="monthgrid"><div class="metric"><strong>$2,920</strong><span>Income</span></div><div class="metric"><strong style="color:var(--accent)">$1,835</strong><span>Spending</span></div><div class="metric"><strong style="color:var(--good)">$1,085</strong><span>Left to spend</span></div></div></div>
+  <div class="card"><div class="card-head"><b>Upcoming bills</b><button class="link" onclick="show('bills')">View all →</button></div>
+    <div class="row"><div class="icon">▣</div><div class="row-main"><b>RBC Credit Card</b><span>Due Oct 14</span></div><div class="amount">$85</div></div>
+    <div class="row"><div class="icon">⌁</div><div class="row-main"><b>Bell Internet</b><span>Due Oct 15</span></div><div class="amount">$94.32</div></div>
+    <div class="row"><div class="icon">ϟ</div><div class="row-main"><b>Hydro One</b><span>Due Oct 18</span></div><div class="amount">$140</div></div>
+  </div>
+</section>
+
+<section id="budget" class="screen">
+  <h2 class="title">Budget</h2><p class="subtitle">October 2026</p>
+  <div class="segment"><button class="active">Spending</button><button>Income</button><button>Trends</button></div>
+  <div class="card"><div class="bigrow"><div><div class="label">Spent</div><div class="big">$1,835</div><div class="small">of $2,920</div></div><div style="text-align:right"><div style="color:var(--good);font-size:22px">$1,085</div><div class="small">left to spend</div></div></div><div class="progress"><i></i></div>
+  <div class="row"><div class="row-main"><b>Groceries</b><span>$312 of $450</span></div><div class="amount">$312</div></div>
+  <div class="row"><div class="row-main"><b>Takeout</b><span>$196 of $300</span></div><div class="amount">$196</div></div>
+  <div class="row"><div class="row-main"><b>Entertainment</b><span>$142 of $250</span></div><div class="amount">$142</div></div>
+  <div class="row"><div class="row-main"><b>Household</b><span>$108 of $200</span></div><div class="amount">$108</div></div>
+  <div class="row"><div class="row-main"><b>Utilities</b><span>$184 of $220</span></div><div class="amount">$184</div></div></div>
+</section>
+
+<section id="bills" class="screen">
+  <h2 class="title">Bills & Payments</h2><p class="subtitle">Everything you have coming up.</p>
+  <div class="segment"><button class="active">Upcoming</button><button>Paid</button><button>Calendar</button></div>
+  <div class="card"><div class="label">Total upcoming</div><div class="big">$764.32</div><div class="small">5 bills · next 10 days</div></div>
+  <div class="card listcard">
+    <div class="row"><div class="icon">▣</div><div class="row-main"><b>RBC Credit Card</b><span>Due Oct 14 · Minimum payment</span></div><div class="amount">$85</div></div>
+    <div class="row"><div class="icon">⌁</div><div class="row-main"><b>Bell Internet</b><span>Due Oct 15</span></div><div class="amount">$94.32</div></div>
+    <div class="row"><div class="icon">ϟ</div><div class="row-main"><b>Hydro One</b><span>Due Oct 18</span></div><div class="amount">$140</div></div>
+    <div class="row"><div class="icon">♪</div><div class="row-main"><b>Spotify</b><span>Due Oct 20</span></div><div class="amount">$12.99</div></div>
+    <div class="row"><div class="icon">⌂</div><div class="row-main"><b>Rent</b><span>Due Nov 1</span></div><div class="amount">$1,400</div></div>
+    <button class="primary">Pay all eligible bills</button>
+  </div>
+</section>
+
+<section id="debt" class="screen">
+  <h2 class="title">Debt & Credit</h2><p class="subtitle">Understand it. Then do something about it.</p>
+  <div class="card"><div class="card-head"><b>Your credit score</b><span class="pill">↑ 12 pts</span></div><div class="score"><div><div class="score-num">742</div><div class="small">Good</div></div><div class="score-ring"></div></div><div class="two" style="margin-top:18px"><div><div class="label">Utilization</div><b>28%</b></div><div><div class="label">Payment history</div><b>100% on time</b></div></div><button class="secondary">View credit details</button></div>
+  <div class="card"><div class="label">Your debt</div><div class="debt-total">$18,620</div><div class="two"><div><div class="label">Accounts</div><b>4</b></div><div><div class="label">Avg. APR</div><b>18.4%</b></div></div><div class="progress"><i style="width:23%"></i></div><div class="small">23% paid off · $5,580 paid</div></div>
+  <div class="card listcard">
+    <div class="row"><div class="icon">▣</div><div class="row-main"><b>RBC Visa</b><span>$2,840 · 19.99% APR · Due Oct 18</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="icon">▣</div><div class="row-main"><b>CIBC Mastercard</b><span>$4,120 · 22.99% APR · Due Oct 22</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="icon">▰</div><div class="row-main"><b>Vehicle Loan</b><span>$8,250 · 6.49% APR</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="icon">◇</div><div class="row-main"><b>Student Loan</b><span>$3,410 · 4.45% APR</span></div><div class="arrow">›</div></div>
+  </div>
+</section>
+
+<section id="more" class="screen">
+  <h2 class="title">More</h2><p class="subtitle">Tools, settings, and help.</p>
+  <div class="card listcard">
+    <div class="row"><div class="icon">◎</div><div class="row-main"><b>Coach</b><span>What should I do with my money?</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="icon">□</div><div class="row-main"><b>Money Table</b><span>See every transaction.</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="icon">?</div><div class="row-main"><b>Learn</b><span>Money explained in normal language.</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="icon">⚙</div><div class="row-main"><b>Settings</b><span>Customize oof. and permissions.</span></div><div class="arrow">›</div></div>
+  </div>
+</section>
+</main>
+
+<nav class="nav">
+<button class="active" data-screen="home"><span>⌂</span>Home</button>
+<button data-screen="budget"><span>▥</span>Budget</button>
+<button data-screen="bills"><span>▣</span>Bills</button>
+<button data-screen="debt"><span>▤</span>Debt & Credit</button>
+<button data-screen="more"><span>•••</span>More</button>
+</nav>
+</div>
+<script>
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.screen));
+</script>
+</body>
+</html>
