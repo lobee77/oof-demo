@@ -184,19 +184,36 @@ function money(n){return Number(n).toLocaleString('en-CA',{style:'currency',curr
 function updateGreeting(){
   const hour=new Date().getHours();
   const time=hour<12?'Good morning,':hour<18?'Good afternoon,':'Good evening,';
-  const messages=[
-    'Bills are covered, spending is on track. You’re doing great.',
-    'Nothing is currently on fire. Bills are covered and you’re on track.',
-    'Okay, look at you. Things are looking pretty solid right now.',
-    'Your money is behaving itself today. Let’s keep it that way.',
-    'You’re covered, you’re on track, and there’s nothing weird happening. Enjoy it.',
-    'Money check: looking good. Carry on.'
+  const income=Number(document.getElementById('inAmount')?.value)||2920;
+  const out=Number(document.getElementById('outAmount')?.value)||1835;
+  const balance=Number(document.getElementById('balanceAmount')?.value)||2847.21;
+  const debt=Number(document.getElementById('debtAmount')?.value)||18620;
+  const apr=Number(document.getElementById('aprAmount')?.value)||22.99;
+  const saved=JSON.parse(localStorage.getItem('oofDemoNumbers')||'null');
+  const messages=[];
+  if(saved){
+    if(out>income){messages.push('Okay, we have officially spent more than came in. That is... impressive. Let’s fix that.');}
+    else if(balance<500){messages.push('You’re getting a little too close to the edge. Nothing is ruined. Maybe let’s stop spending for a minute.');}
+    else if(debt>15000 && apr>=20){messages.push('Your money is doing okay. That high-interest debt, however, is still sitting there being expensive. Rude.');}
+    else if(out>income*.7){messages.push('You’re doing alright, but spending is getting a little enthusiastic. I’m just saying.');}
+    else if(income-out>=500){messages.push('Look at you. Bills covered, money left over, and no financial nonsense detected. Keep it up.');}
+    else {messages.push('You’re on track. Nothing is currently on fire. Let’s keep it that way.');}
+  } else {
+    messages.push('Bills are covered and your plan is on track. Look at you.'); 
+  }
+  const variations=[
+    'You’re doing pretty well. Try not to make me compliment you twice.',
+    'Things are looking solid. Please don’t take that as a challenge.',
+    'You’re on track. I have nothing sarcastic to report. For once.',
+    'Money is behaving itself today. Let’s not ruin it.',
+    'Not bad. Actually, pretty good. I hate to admit it.',
+    'You’re covered and moving in the right direction. Carry on.'
   ];
+  const msg=messages[0] || variations[Math.floor(Math.random()*variations.length)];
   document.getElementById('greetingTime').textContent=time;
   document.getElementById('userGreetingName').textContent='Lindsay.';
-  document.getElementById('greetingMessage').textContent=messages[Math.floor(Math.random()*messages.length)];
+  document.getElementById('greetingMessage').textContent=msg;
 }
-
 function loadNumbers(){
   const d=JSON.parse(localStorage.getItem('oofDemoNumbers')||'null');
   if(!d)return;
