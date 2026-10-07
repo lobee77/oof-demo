@@ -49,7 +49,7 @@ main{padding:10px 18px 20px}.screen{display:none}.screen.active{display:block}
 
 <main>
 <section id="home" class="screen active">
-  <div class="greeting"><div class="hello">Good morning,</div><h1>Lindsay.</h1><p>Bills are covered, spending is on track, and you've got $420 left this month. You're doing great.</p></div>
+  <div class="greeting"><div class="hello" id="greetingTime">Good morning,</div><h1 id="userGreetingName">Lindsay.</h1><p id="greetingMessage">Bills are covered, spending is on track, and you've got $420 left this month. You're doing great.</p></div>
   <div class="card"><div class="label">Account balance</div><div class="balance">$2,847.21</div><div class="change">↑ $350 from last week</div></div>
   <div class="card"><div class="card-head"><b>This month</b><button class="link" onclick="show('budget')">See details →</button></div><div class="progress"><i></i></div><div class="monthgrid"><div class="metric"><strong>$2,920</strong><span>Income</span></div><div class="metric"><strong style="color:var(--accent)">$1,835</strong><span>Spending</span></div><div class="metric"><strong style="color:var(--good)">$1,085</strong><span>Left to spend</span></div></div></div>
   <div class="card"><div class="card-head"><b>Upcoming bills</b><button class="link" onclick="show('bills')">View all →</button></div>
@@ -181,6 +181,22 @@ main{padding:10px 18px 20px}.screen{display:none}.screen.active{display:block}
 </div>
 <script>
 function money(n){return Number(n).toLocaleString('en-CA',{style:'currency',currency:'CAD'});}
+function updateGreeting(){
+  const hour=new Date().getHours();
+  const time=hour<12?'Good morning,':hour<18?'Good afternoon,':'Good evening,';
+  const messages=[
+    'Bills are covered, spending is on track. You’re doing great.',
+    'Nothing is currently on fire. Bills are covered and you’re on track.',
+    'Okay, look at you. Things are looking pretty solid right now.',
+    'Your money is behaving itself today. Let’s keep it that way.',
+    'You’re covered, you’re on track, and there’s nothing weird happening. Enjoy it.',
+    'Money check: looking good. Carry on.'
+  ];
+  document.getElementById('greetingTime').textContent=time;
+  document.getElementById('userGreetingName').textContent='Lindsay.';
+  document.getElementById('greetingMessage').textContent=messages[Math.floor(Math.random()*messages.length)];
+}
+
 function loadNumbers(){
   const d=JSON.parse(localStorage.getItem('oofDemoNumbers')||'null');
   if(!d)return;
@@ -211,6 +227,7 @@ function show(id){
 }
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.screen));
 loadNumbers();
+updateGreeting();
 </script>
 </body>
 </html>
