@@ -96,12 +96,58 @@ main{padding:10px 18px 20px}.screen{display:none}.screen.active{display:block}
   </div>
 </section>
 
+
+<section id="coach" class="screen">
+  <h2 class="title">Coach</h2><p class="subtitle">What should I do with my money?</p>
+  <div class="card">
+    <div class="pill">oof.'s take</div>
+    <h3 style="font-size:22px;margin:12px 0 8px">You're doing pretty well.</h3>
+    <p style="color:var(--muted);font-size:14px;line-height:1.55;margin:0">Bills are covered and you have $1,085 left in your monthly spending plan. Your biggest opportunity right now is debt: the CIBC Mastercard is at 22.99% APR.</p>
+  </div>
+  <div class="card">
+    <div class="label">If I were prioritizing this</div>
+    <div class="row"><div class="icon">1</div><div class="row-main"><b>Keep the bills covered</b><span>Don't sacrifice upcoming payments to pay debt faster.</span></div></div>
+    <div class="row"><div class="icon">2</div><div class="row-main"><b>Keep a cash buffer</b><span>Leave some money available for surprises.</span></div></div>
+    <div class="row"><div class="icon">3</div><div class="row-main"><b>Attack the 22.99% card</b><span>Extra payments there can save the most interest.</span></div></div>
+    <button class="primary" onclick="show('debt')">See debt payoff options</button>
+  </div>
+  <div class="card">
+    <div class="label">Learn while you use oof.</div>
+    <p style="font-size:14px;line-height:1.55;margin:8px 0 0"><b>APR</b> is basically the price of borrowing money. A higher APR means carrying that balance costs you more.</p>
+  </div>
+</section>
+<section id="table" class="screen">
+  <h2 class="title">Money Table</h2><p class="subtitle">Your money, without the spreadsheet headache.</p>
+  <div class="card"><div class="monthgrid"><div class="metric"><strong>$2,920</strong><span>Money in</span></div><div class="metric"><strong>$1,835</strong><span>Money out</span></div><div class="metric"><strong>$1,085</strong><span>Left</span></div></div></div>
+  <div class="card listcard">
+    <div class="row"><div class="row-main"><b>Oct 7 · Payroll</b><span>Money In</span></div><div class="amount" style="color:var(--good)">+$1,850</div></div>
+    <div class="row"><div class="row-main"><b>Oct 7 · Rent</b><span>Home</span></div><div class="amount">-$1,200</div></div>
+    <div class="row"><div class="row-main"><b>Oct 6 · Starbucks</b><span>Eating Out</span></div><div class="amount">-$18</div></div>
+    <div class="row"><div class="row-main"><b>Oct 5 · Groceries</b><span>Groceries</span></div><div class="amount">-$86</div></div>
+    <div class="row"><div class="row-main"><b>Oct 4 · Bell Internet</b><span>Bills</span></div><div class="amount">-$94.32</div></div>
+  </div>
+</section>
+<section id="learn" class="screen">
+  <h2 class="title">Learn</h2><p class="subtitle">Money explained in normal language.</p>
+  <div class="card">
+    <div class="label">Quick explanation</div>
+    <h3 style="font-size:21px;margin:8px 0">Why does the minimum payment take so long?</h3>
+    <p style="color:var(--muted);font-size:14px;line-height:1.55">Because part of the payment can go toward interest instead of reducing what you owe. Paying more than the minimum can shorten the payoff time and reduce interest.</p>
+  </div>
+  <div class="card listcard">
+    <div class="row"><div class="row-main"><b>APR</b><span>The price of borrowing money.</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="row-main"><b>Credit utilization</b><span>How much of your available revolving credit you're using.</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="row-main"><b>Principal</b><span>The actual amount you borrowed.</span></div><div class="arrow">›</div></div>
+    <div class="row"><div class="row-main"><b>Compound interest</b><span>Interest that can earn or cost interest over time.</span></div><div class="arrow">›</div></div>
+  </div>
+</section>
+
 <section id="more" class="screen">
   <h2 class="title">More</h2><p class="subtitle">Tools, settings, and help.</p>
   <div class="card listcard">
-    <div class="row"><div class="icon">◎</div><div class="row-main"><b>Coach</b><span>What should I do with my money?</span></div><div class="arrow">›</div></div>
-    <div class="row"><div class="icon">□</div><div class="row-main"><b>Money Table</b><span>See every transaction.</span></div><div class="arrow">›</div></div>
-    <div class="row"><div class="icon">?</div><div class="row-main"><b>Learn</b><span>Money explained in normal language.</span></div><div class="arrow">›</div></div>
+    <button class="row" style="width:100%;background:none;text-align:left" onclick="show('coach')"><div class="icon">◎</div><div class="row-main"><b>Coach</b><span>What should I do with my money?</span></div><div class="arrow">›</div></button>
+    <button class="row" style="width:100%;background:none;text-align:left" onclick="show('table')"><div class="icon">□</div><div class="row-main"><b>Money Table</b><span>See every transaction.</span></div><div class="arrow">›</div></button>
+    <button class="row" style="width:100%;background:none;text-align:left" onclick="show('learn')"><div class="icon">?</div><div class="row-main"><b>Learn</b><span>Money explained in normal language.</span></div><div class="arrow">›</div></button>
     <div class="row"><div class="icon">⚙</div><div class="row-main"><b>Settings</b><span>Customize oof. and permissions.</span></div><div class="arrow">›</div></div>
   </div>
 </section>
