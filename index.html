@@ -241,10 +241,11 @@ function updateGreeting(){
     ]
   };
   let msg=lines[situation][Math.floor(Math.random()*lines[situation].length)];
+  // charmi. voice: financially responsible friend — supportive, direct, and willing to call you out.
   if(tone==='Gentle') msg=msg.replace(/Rude\.|I have questions\.|Maybe don’t develop an expensive new hobby this week\./g,'Let’s keep things comfortable.').replace(/bold/g,'a little higher than usual');
-  if(tone==='Sarcastic') msg=msg.replace('Look at you.','Oh, look at you.').replace('Honestly? I’ll take it.','Well. That’s surprisingly responsible.');
+  if(tone==='Sarcastic') msg=msg.replace('Look at you.','Okay, look at you.').replace('Honestly? I’ll take it.','Honestly? We’ll take it.');
   if(tone==='Tough love') msg=msg.replace('Maybe let’s not help it get any bolder.','Let’s pull it back.').replace('Let’s keep it that way.','Keep it that way.');
-  if(tone==='No mercy / swear mode') msg=msg.replace('Maybe let’s not help it get any bolder.','Put the card down.').replace('Let’s keep it that way.','Do not screw this up.').replace('Rude.','Because apparently the debt needed more of your money.');
+  if(tone==='No mercy / swear mode') msg=msg.replace('Maybe let’s not help it get any bolder.','Put the card down.').replace('Let’s keep it that way.','Keep it that way.').replace('Rude.','That interest rate is taking enough of your money already.');
   document.getElementById('greetingTime').textContent=time;
   document.getElementById('userGreetingName').textContent='Lindsay.';
   document.getElementById('greetingMessage').textContent=msg;
