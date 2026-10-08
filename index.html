@@ -197,12 +197,48 @@ function updateGreeting(){
   else if(out>income*.7) situation='spending';
   else if(income-out>=500) situation='good';
   const lines={
-    good:['Bills are covered, you’ve got money left, and you’re moving toward '+goal+'. Look at you.','Okay, look at you. The money is behaving and the goal is actually moving. I’m impressed.'],
-    spending:['You’re doing okay, but spending is getting a little enthusiastic. '+goal+' would like a word.','You’re still on track, but the spending is getting bold. Maybe let’s not help it get any bolder.'],
-    debt:['Your day-to-day money looks okay. That '+apr.toFixed(2)+'% debt is still being expensive, though. Rude.','Bills are covered. Now that '+apr.toFixed(2)+'% debt is sitting there charging you money like it owns the place. Let’s deal with it.'],
-    low:['You’re getting a little close to the edge. Nothing is ruined, but I’d keep spending tight until more money comes in.','You’ve got less room than usual right now. Maybe don’t develop an expensive new hobby this week.'],
-    overspent:['Okay. We spent more than came in. That is technically a strategy. Not one I recommend.','Lindsay. We have officially spent more than came in. I have questions.'],
-    steady:['You’re on track. Nothing is currently on fire. Let’s keep it that way.','Nothing weird is happening with your money today. Honestly? I’ll take it.']
+    good:[
+      'Bills are covered, you’ve got money left, and you’re moving toward '+goal+'. Look at you.',
+      'Okay, look at you. The money is behaving and the goal is actually moving. I’m impressed.',
+      'You’re in a pretty good spot. Bills are handled, the goal is moving, and nobody needs to panic.',
+      'Money is looking decent today. Please resist the urge to ruin our beautiful progress.',
+      'You’ve got some breathing room and a plan. Honestly? Love that for you.'
+    ],
+    spending:[
+      'You’re doing okay, but spending is getting a little enthusiastic. '+goal+' would like a word.',
+      'You’re still on track, but the spending is getting bold. Maybe let’s not help it get any bolder.',
+      'Nothing is on fire, but your spending is starting to feel very confident.',
+      'You can afford some fun. Just maybe not every fun thing you see.',
+      'The budget is holding. Barely enough reason to celebrate with another purchase.'
+    ],
+    debt:[
+      'Your day-to-day money looks okay. That '+apr.toFixed(2)+'% debt is still being expensive, though. Rude.',
+      'Bills are covered. Now that '+apr.toFixed(2)+'% debt is sitting there charging you money like it owns the place. Let’s deal with it.',
+      'You’re doing fine day to day. The debt, however, continues to have expensive opinions.',
+      'That '+apr.toFixed(2)+'% APR is quietly eating money. We should probably stop letting it.',
+      'Everything looks fairly calm. Except for that debt charging '+apr.toFixed(2)+'%. It did not get the memo.'
+    ],
+    low:[
+      'You’re getting a little close to the edge. Nothing is ruined, but I’d keep spending tight until more money comes in.',
+      'You’ve got less room than usual right now. Maybe don’t develop an expensive new hobby this week.',
+      'Cash is looking a little shy today. Keep the spending boring for a minute.',
+      'You’re okay, but the cushion is getting thin. This is a good time to be mildly boring.',
+      'Nothing is broken. We just have less wiggle room than we’d like. Let’s protect it.'
+    ],
+    overspent:[
+      'Okay. We spent more than came in. That is technically a strategy. Not one I recommend.',
+      'Lindsay. We have officially spent more than came in. I have questions.',
+      'Well. More money went out than came in. Let’s call that our cue to tighten things up.',
+      'The spending won this round. No big dramatic speech. We just need a better next move.',
+      'Okay, the math has opinions. We spent more than we brought in. Let’s fix that.'
+    ],
+    steady:[
+      'You’re on track. Nothing is currently on fire. Let’s keep it that way.',
+      'Nothing weird is happening with your money today. Honestly? I’ll take it.',
+      'Your money is behaving itself. Weirdly refreshing.',
+      'Things look steady. No financial plot twists detected.',
+      'You’re in a decent spot. Let’s not get creative and mess it up.'
+    ]
   };
   let msg=lines[situation][Math.floor(Math.random()*lines[situation].length)];
   if(tone==='Gentle') msg=msg.replace(/Rude\.|I have questions\.|Maybe don’t develop an expensive new hobby this week\./g,'Let’s keep things comfortable.').replace(/bold/g,'a little higher than usual');
